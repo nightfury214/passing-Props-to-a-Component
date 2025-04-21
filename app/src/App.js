@@ -197,25 +197,40 @@ function Item({name, isPacked}) {
 // }
 
 
-export default function List() {
-  const listItems = people.map(person =>
-    <li key={person.id}>
-      <img 
-        src = {getImageUrl(person)}
-        alt = {person.name}
-      />
-      <p>
-        <b>{person.name}</b>
-        {' ' + person.profession + ' '}
-        knwon for {person.accomplishment}
-      </p>
-    </li>
-  );
+// export default function List() {
+//   const listItems = people.map(person =>
+//     <li key={person.id}>
+//       <img 
+//         src = {getImageUrl(person)}
+//         alt = {person.name}
+//       />
+//       <p>
+//         <b>{person.name}</b>
+//         {' ' + person.profession + ' '}
+//         knwon for {person.accomplishment}
+//       </p>
+//     </li>
+//   );
 
-  return (
-    <article>
-      <h1>Scientists</h1>
-      <ui>{listItems}</ui>
-    </article>
-  )
+//   return (
+//     <article>
+//       <h1>Scientists</h1>
+//       <ui>{listItems}</ui>
+//     </article>
+//   )
+// }
+
+
+
+function Cup({guest}) {
+  return <h2>Tea for guest #{guest}</h2>;
+}
+
+export default function TeaGathering() {
+  let cups = [];
+  for(let i = 1; i <= 12; i ++) {
+    cups.push(<Cup key={i} guest = {i}/>);
+  }
+
+  return cups;
 }
