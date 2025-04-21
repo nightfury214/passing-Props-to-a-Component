@@ -26,6 +26,7 @@
 
 import Avatar from "./Avatar";
 import { getImageUrl } from "./utils";
+import { people } from "./data";
 
 function Card({children}) {
   return (
@@ -131,24 +132,90 @@ function Item({name, isPacked}) {
   );
 }
 
-export default function PackingList() {
-  return(
-    <section>
-      <h1>Sally Ride's Packing List</h1>
-      <ul>
-        <Item 
-          isPacked={true}
-          name ="space suit"
-        />
-        <Item
-          isPacked={true}
-          name ="helmet"
-        />
-        <Item
-          isPacked={false}
-          name="photo"
-        />
-      </ul>
-    </section>
+// export default function PackingList() {
+//   return(
+//     <section>
+//       <h1>Sally Ride's Packing List</h1>
+//       <ul>
+//         <Item 
+//           isPacked={true}
+//           name ="space suit"
+//         />
+//         <Item
+//           isPacked={true}
+//           name ="helmet"
+//         />
+//         <Item
+//           isPacked={false}
+//           name="photo"
+//         />
+//       </ul>
+//     </section>
+//   );
+// }
+
+
+// const people = [
+//   'Creola Katherine Johnson: mathematician',
+//   'Mario José Molina-Pasquel Henríquez: chemist',
+//   'Mohammad Abdus Salam: physicist',
+//   'Percy Lavon Julian: chemist',
+//   'Subrahmanyan Chandrasekhar: astrophysicist'
+// ];
+
+
+// export default function List() {
+//   const listItems = people.map(person =>
+//     <li>{person}</li>
+//   );
+
+//   return <ul>{listItems}</ul>
+// }
+
+
+// export default function List() {
+//   const chemists = people.filter(person =>
+//     person.profession === 'chemist'
+//   );
+
+//   const listItems = chemists.map(person =>
+//     <li>
+//       <img
+//         src={getImageUrl(person)}
+//         alt={person.name}
+//       />
+//       <p>
+//         <b>
+//           {person.name}:
+//         </b>
+//         {' ' + person.profession + ' '}
+//         knwon for {person.accomplishment}
+//       </p>
+//     </li>
+//   );
+//   return <ul>{listItems}</ul>
+// }
+
+
+export default function List() {
+  const listItems = people.map(person =>
+    <li key={person.id}>
+      <img 
+        src = {getImageUrl(person)}
+        alt = {person.name}
+      />
+      <p>
+        <b>{person.name}</b>
+        {' ' + person.profession + ' '}
+        knwon for {person.accomplishment}
+      </p>
+    </li>
   );
+
+  return (
+    <article>
+      <h1>Scientists</h1>
+      <ui>{listItems}</ui>
+    </article>
+  )
 }
