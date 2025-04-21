@@ -27,6 +27,9 @@
 import Avatar from "./Avatar";
 import { getImageUrl } from "./utils";
 import { people } from "./data";
+import FancyText from "./FancyText";
+import InspiratinGenerator from "./InspirationGenerator";
+import Copyright from "./Copyright";
 
 function Card({children}) {
   return (
@@ -222,15 +225,28 @@ function Item({name, isPacked}) {
 
 
 
-function Cup({guest}) {
-  return <h2>Tea for guest #{guest}</h2>;
-}
+// function Cup({guest}) {
+//   return <h2>Tea for guest #{guest}</h2>;
+// }
 
-export default function TeaGathering() {
-  let cups = [];
-  for(let i = 1; i <= 12; i ++) {
-    cups.push(<Cup key={i} guest = {i}/>);
-  }
+// export default function TeaGathering() {
+//   let cups = [];
+//   for(let i = 1; i <= 12; i ++) {
+//     cups.push(<Cup key={i} guest = {i}/>);
+//   }
 
-  return cups;
+//   return cups;
+// }
+
+
+
+export default function App() {
+  return(
+    <>
+      <FancyText title text="Get Inspored App"/>
+      <InspiratinGenerator>
+        <Copyright  year={2025}/>
+      </InspiratinGenerator>
+    </>
+  );
 }
