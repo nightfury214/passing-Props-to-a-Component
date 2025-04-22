@@ -432,107 +432,283 @@ function Item({name, isPacked}) {
 // }
 
 
-export default function Form() {
-  const [person, setPerson] = useState({
-    firstName: 'panda',
-    lastName: 'Hepworth',
-    email: 'bhepworth@sculpture.com',
-    artwork:{
-      title:'blue nana',
-      city:'hamburg',
-      image:'https://i.imgur.com/'
-    },
-    score: 10,
-  });
+// export default function Form() {
+//   const [person, setPerson] = useState({
+//     firstName: 'panda',
+//     lastName: 'Hepworth',
+//     email: 'bhepworth@sculpture.com',
+//     artwork:{
+//       title:'blue nana',
+//       city:'hamburg',
+//       image:'https://i.imgur.com/'
+//     },
+//     score: 10,
+//   });
 
-  function handlePlusClick(){
-    person.score ++;
-  }
-  function handleFirstNameChange(e) {
-    setPerson({
-      ...person,
-      firstName: e.target.firstName
-    });
-    // person.firstName = e.target.value;
+//   function handlePlusClick(){
+//     person.score ++;
+//   }
+//   function handleFirstNameChange(e) {
+//     setPerson({
+//       ...person,
+//       firstName: e.target.firstName
+//     });
+//     // person.firstName = e.target.value;
+//   }
+
+//   function handleLastNameChange(e) {
+//     setPerson({
+//       ...person,
+//       lastName: e.target.lastName
+//     });
+//     // person.lastName = e.target.value;
+//   }
+
+//   function handleEmailChange(e) {
+//     setPerson({
+//       ...person,
+//       email:e.target.email
+//     })
+//     // person.email = e.target.value;
+//   }
+
+//   function handleTitleChange(e) {
+//     setPerson({
+//       ...person,
+//       artwork: {
+//         ...person.artwork,
+//         title: e.target.value
+//       }
+//     });
+//   }
+
+//   function handleCityChange(e) {
+//     setPerson({
+//       ...person,
+//       artwork :{
+//         ...person.artwork,
+//         city: e.target.value
+//       }
+//     });
+//   }
+
+//   function handleImageChange(e) {
+//     setPerson({
+//       ...person,
+//       artwork:{
+//         ...person.artwork,
+//         image: e.target.value
+//       }
+//     });
+//   }
+
+//   return(
+//     <>
+//       <label>
+//         score: <b>{person.score}</b>
+//         {' '}
+//         <button onClick={handlePlusClick}> +1</button>
+//       </label>
+//       <label>
+//         First name:
+//         <input value={person.firstName} onChange={handleFirstNameChange}/>
+//       </label>
+//       <label>
+//         Last name:
+//         <input value={person.lastName} onChange={handleLastNameChange}/>
+//       </label>
+//       <label>
+//         email:
+//         <input value={person.email} onChange={handleEmailChange}/>
+//       </label>
+//       <label>
+//         Title:
+//         <input value={person.artwork.title} onChange={handleTitleChange}/>
+//       </label>
+//       <label>
+//         city:
+//         <input  value={person.artwork.city} onChange={handleCityChange}/>
+//       </label>
+//       <label>
+//         image:
+//         <input value={person.artwork.image} onChange={handleImageChange}/>
+//       </label>
+//     </>
+//   )
+// }
+
+
+// let nextId = 0;
+
+// export default function List() {
+//   const [name, setName] = useState('');
+//   const [artists, setArtists] = useState([]);
+
+//   return(
+//     <>
+//       <h1>
+//         Inspiring sculptors:
+//       </h1>
+//       <input value={name} onChange={e => setName(e.target.value)}/>
+//       <button onClick={() => {
+//         // artists.push({
+//         //   id: nextId ++,
+//         //   name:name,
+//         // });
+//         setArtists([
+//           ...artists,
+//           {
+//             id:nextId++,
+//             name:name
+//           }
+//         ]);
+//       }}>add</button>
+//       <ul>
+//         {artists.map(artist => (
+//           <li key={artist.id}> {artist.name} </li>
+//         ))}
+//       </ul>
+//     </>
+
+//   )
+// }
+
+// let initialArtists = [
+//   { id: 0, name: 'Marta Colvin Andrade' },
+//   { id: 1, name: 'Lamidi Olonade Fakeye'},
+//   { id: 2, name: 'Louise Nevelson'},
+// ];
+
+// export default function List() {
+//   const [artists, setArtists] = useState(initialArtists);
+
+//   return (
+//     <>
+//       <h1>Inspiring sculptors:</h1>
+//       <ul>
+//         {artists.map(artist => (
+//           <li key={artist.id}>
+//             {artist.name}{' '}
+//             <button onClick={() => {
+//               setArtists(artists.filter(a => a.id !== artist.id))
+//             }}>delete</button>
+//           </li>
+//         ))}
+//       </ul>
+//     </>
+//   );
+// }
+
+
+// let nextId = 3;
+// const initialArtists = [
+//   { id: 0, name: 'Marta Colvin Andrade' },
+//   { id: 1, name: 'Lamidi Olonade Fakeye'},
+//   { id: 2, name: 'Louise Nevelson'},
+// ];
+
+// export default function List() {
+//   const [name, setName] = useState('');
+//   const [artists, setArtists] = useState(
+//     initialArtists
+//   );
+
+//   function handleClick() {
+//     const insertAt = 1;
+//     const nextArtists = [
+//       ...artists.slice(0, insertAt),
+//       { id: nextId++, name: name },
+//       ...artists.slice(insertAt)
+//     ];
+//     setArtists(nextArtists);
+//     setName('');
+//   }
+
+//   return (
+//     <>
+//       <h1>Inspiring sculptors:</h1>
+//       <input
+//         value={name}
+//         onChange={e => setName(e.target.value)}
+//       />
+//       <button onClick={handleClick}>
+//         Insert
+//       </button>
+//       <ul>
+//         {artists.map(artist => (
+//           <li key={artist.id}>{artist.name}</li>
+//         ))}
+//       </ul>
+//     </>
+//   );
+// }
+
+
+let nextId = 3;
+const initialList = [
+  { id: 0, title: 'Big Bellies', seen: false },
+  { id: 1, title: 'Lunar Landscape', seen: false },
+  { id: 2, title: 'Terracotta Army', seen: true },
+];
+
+
+export default function BucketList() {
+  const [myList, setMyList] = useState(initialList);
+  const [yourList, setYourList] = useState(initialList);
+
+  function handleToggleleMyList(artworkId, nextSeen) {
+    setMyList(myList.map(artwork => {
+      if(artwork.id === artworkId) {
+        return{...artwork, seen: nextSeen}
+      } else return artwork;
+    }));
   }
 
-  function handleLastNameChange(e) {
-    setPerson({
-      ...person,
-      lastName: e.target.lastName
-    });
-    // person.lastName = e.target.value;
+  function handleToggleYourList(artworkId, nextSeen) {
+    setYourList(yourList.map(artwork => {
+      if(artwork.id === artworkId) {
+        return{...artwork, seen:nextSeen};
+      } else return artwork;
+    }));
   }
 
-  function handleEmailChange(e) {
-    setPerson({
-      ...person,
-      email:e.target.email
-    })
-    // person.email = e.target.value;
-  }
-
-  function handleTitleChange(e) {
-    setPerson({
-      ...person,
-      artwork: {
-        ...person.artwork,
-        title: e.target.value
-      }
-    });
-  }
-
-  function handleCityChange(e) {
-    setPerson({
-      ...person,
-      artwork :{
-        ...person.artwork,
-        city: e.target.value
-      }
-    });
-  }
-
-  function handleImageChange(e) {
-    setPerson({
-      ...person,
-      artwork:{
-        ...person.artwork,
-        image: e.target.value
-      }
-    });
-  }
-
-  return(
+  return (
     <>
-      <label>
-        score: <b>{person.score}</b>
-        {' '}
-        <button onClick={handlePlusClick}> +1</button>
-      </label>
-      <label>
-        First name:
-        <input value={person.firstName} onChange={handleFirstNameChange}/>
-      </label>
-      <label>
-        Last name:
-        <input value={person.lastName} onChange={handleLastNameChange}/>
-      </label>
-      <label>
-        email:
-        <input value={person.email} onChange={handleEmailChange}/>
-      </label>
-      <label>
-        Title:
-        <input value={person.artwork.title} onChange={handleTitleChange}/>
-      </label>
-      <label>
-        city:
-        <input  value={person.artwork.city} onChange={handleCityChange}/>
-      </label>
-      <label>
-        image:
-        <input value={person.artwork.image} onChange={handleImageChange}/>
-      </label>
+      <h1>Art Bucket List</h1>
+      <h2>My list of art to see:</h2>
+      <ItemList 
+        artworks={myList}
+        onToggle={handleToggleleMyList}
+      />
+      <h2>Your list of art to see:</h2>
+      <ItemList 
+        artworks={yourList}
+        onToggle={handleToggleYourList}
+      />
     </>
-  )
+  );
+}
+
+function ItemList({artworks, onToggle}) {
+  return(
+    <ul>
+      {artworks.map(artwork => (
+        <li key={artwork.id}>
+          <label>
+            <input 
+              type="checkbox"
+              checked={artwork.seen}
+              onChange={e => {
+                onToggle(
+                  artwork.id,
+                e.target.checked
+                );
+              }}
+            />
+            {artwork.title}
+          </label>
+        </li>
+      ))}
+    </ul>
+  );
 }
