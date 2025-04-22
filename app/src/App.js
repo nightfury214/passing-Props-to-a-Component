@@ -32,6 +32,9 @@ import InspiratinGenerator from "./InspirationGenerator";
 import Copyright from "./Copyright";
 import { useState } from "react";
 import { initialTravelPlan } from "./places";
+import Chat from "./Chat";
+import ContactList from "./ContactList";
+
 
 function Card({children}) {
   return (
@@ -956,26 +959,182 @@ function Item({name, isPacked}) {
 //   )
 // }
 
-export default function SyncedInputs() {
-  return(
-    <>
-      <Input label = "first input"/>
-      <Input label = "second input"/>
-    </>
+// export default function SyncedInputs() {
+//   return(
+//     <>
+//       <Input label = "first input"/>
+//       <Input label = "second input"/>
+//     </>
+//   );
+// }
+
+// function Input({label}) {
+//   const [text, setText] = useState('');
+
+//   function handleChange(e) {
+//     setText(e.target.value);
+//   }
+
+//   return (
+//     <label>
+//       {label}{' '}
+//       <input value={text} onChange={handleChange}/>
+//     </label>
+//   )
+// }
+
+// export default function App(){
+//   // const counter = <Counter />
+//   const [showB, setShowB] = useState(true);
+
+//   return(
+//     <div>
+//       {/* {counter}
+//       {counter} */}
+//       <Counter />
+//       {showB && <Counter />}
+//       <label>
+//         <input 
+//           type = "checkbox"
+//           checked={showB}
+//           onClick={e => {setShowB(e.target.checked)
+//           }}
+//         />render the second counter
+//       </label>
+//     </div>
+//   );
+// }
+
+// function Counter(){
+//   const [score, setScore] = useState(0);
+//   const [hover, setHover] = useState(false);
+
+//   let className = 'counter';
+//   if(hover) className += 'hover';
+
+//   return(
+//     <div
+//     className={className}
+//     onPointerEnter={() => setHover(true)}
+//     onPointerLeave={() => setHover(false)}
+//     >
+//       <h1>{score}</h1>
+//       <button onClick={() => setScore(score + 1)}>
+//         add one
+//       </button>
+//     </div>
+//   )
+// }
+
+// export default function App() {
+//   const [isFancy, setIsFancy] = useState(false);
+//   return(
+//     <div>
+//       {isFancy ? (
+//         <Counter isFancy={true} />
+//       ) : (
+//         <Counter isFancy={true} />
+//       )}
+
+//       <label>
+//         <input 
+//         type="checkbox"
+//         checked={isFancy}
+//         onChange={e=>{
+//           setIsFancy(e.target.checked)
+//         }}
+//         />
+//         use fancy styling
+//       </label>
+//     </div>
+//   )
+// }
+
+// function Counter({isFancy}) {
+//   const [score, setScore] = useState(0);
+//   const [hover, setHover] = useState(false);
+
+//   let className = 'counter';
+//   if(hover) {
+//     className += 'hover';
+//   }
+//   if(isFancy) {
+//     className += 'fancy';
+//   }
+
+//   return (
+//     <div
+//       className={className}
+//       onPointerEnter={() => setHover(true)}
+//       onPointerLeave={() => setHover(false)}
+//     >
+//       <h1>{score}</h1>
+//       <button onClick={() => setScore(score + 1)}>add one</button>
+//     </div>
+//   )
+// }
+
+// export default function App() {
+//   const [isPaused, setIsPaused] = useState(false);
+
+//   return(
+//     <div>
+//       {isPaused ? (
+//         <p>see you later!!</p>
+//       ) : (<Counter />)}
+//       <label>
+//         <input 
+//           type="checkbox"
+//           checked={isPaused}
+//           onChange={e => {
+//             setIsPaused(e.target.checked)
+//           }}
+//         />
+//         Take a break
+//       </label>
+//     </div>
+//   )
+// }
+
+// function Counter() {
+//   const [score, setScore] = useState(0);
+//   const [hover, setHover] = useState(false);
+
+//   let className = 'counter';
+//   if(hover) className += 'hover';
+
+//   return (
+//     <div
+//       className={className}
+//       onPointerEnter={() => setHover(true)}
+//       onPointerLeave={() => setHover(false)}
+//     >
+//       <h1>{score}</h1>
+//       <button
+//         onClick={() => setScore(score + 1)}
+//       >
+//         add one
+//       </button>
+//     </div>
+//   );
+// }
+
+export default function Messenger() {
+  const [to, setTo] = useState(contacts[0]);
+  return (
+    <div>
+      <ContactList 
+        contacts={contacts}
+        selectedContact={to}
+        onSelect={contact => setTo(contact)}
+      />
+      <Chat contact={to}/>
+    </div>
   );
 }
 
-function Input({label}) {
-  const [text, setText] = useState('');
-
-  function handleChange(e) {
-    setText(e.target.value);
-  }
-
-  return (
-    <label>
-      {label}{' '}
-      <input value={text} onChange={handleChange}/>
-    </label>
-  )
-}
+const contacts = [
+  { id: 0, name: 'Taylor', email: 'taylor@mail.com' },
+  { id: 1, name: 'Alice', email: 'alice@mail.com' },
+  { id: 2, name: 'Bob', email: 'bob@mail.com' }
+];
