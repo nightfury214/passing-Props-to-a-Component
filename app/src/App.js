@@ -31,6 +31,7 @@ import FancyText from "./FancyText";
 import InspiratinGenerator from "./InspirationGenerator";
 import Copyright from "./Copyright";
 import { useState } from "react";
+import { initialTravelPlan } from "./places";
 
 function Card({children}) {
   return (
@@ -713,60 +714,184 @@ function Item({name, isPacked}) {
 //   );
 // }
 
-export default function Form() {
-  const [answer, setAnswer] = useState('');
-  const [error, setError] = useState(null);
-  const [status, setStatus] = useState('typing');
+// export default function Form() {
+//   const [answer, setAnswer] = useState('');
+//   const [error, setError] = useState(null);
+//   const [status, setStatus] = useState('typing');
 
-  if(status === 'success') {
-    return <h1>That's right</h1>
-  }
+//   if(status === 'success') {
+//     return <h1>That's right</h1>
+//   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setStatus('submitting');
-    try {
-      await submitForm(answer);
-      setStatus('success');
-    } catch(err) {
-      setStatus('typing');
-      setError(err);
-    }
-  }
+//   async function handleSubmit(e) {
+//     e.preventDefault();
+//     setStatus('submitting');
+//     try {
+//       await submitForm(answer);
+//       setStatus('success');
+//     } catch(err) {
+//       setStatus('typing');
+//       setError(err);
+//     }
+//   }
 
-  function handleTextareaChange(e) {
-    setAnswer(e.target.value);
-  }
+//   function handleTextareaChange(e) {
+//     setAnswer(e.target.value);
+//   }
 
-  return (
-    <>
-    <h2>city quiz</h2>
-    <p>
-      In which city is there a billboard that turns ari
-    </p>
-    <form onSubmit={handleSubmit}>
-      <textarea 
-        value={answer}
-        onChange={handleTextareaChange}
-        disabled={status === 'submitting'}
-      />
-    </form>
-    <br/>
-    <button disabled={answer.length === 0|| status === 'submitting'}>Submit</button>
-    {error !== null && <p className="Error">{error.message}</p>}
-    </>
-  )
+//   return (
+//     <>
+//     <h2>city quiz</h2>
+//     <p>
+//       In which city is there a billboard that turns ari
+//     </p>
+//     <form onSubmit={handleSubmit}>
+//       <textarea 
+//         value={answer}
+//         onChange={handleTextareaChange}
+//         disabled={status === 'submitting'}
+//       />
+//     </form>
+//     <br/>
+//     <button disabled={answer.length === 0|| status === 'submitting'}>Submit</button>
+//     {error !== null && <p className="Error">{error.message}</p>}
+//     </>
+//   )
+// }
+
+// function submitForm(answer) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       let shouldError = answer.toLowerCase() !== 'lima'
+//       if(shouldError) {
+//         reject(new Error('Good guess but a wrong answer'));
+//       } else {
+//         resolve();
+//       }
+//     }, 1500);
+//   });
+// }
+
+
+// export default function FeedbackForm() {
+//   const [text, setText] = useState('');
+//   // const [isSending, setIsSending] = useState(false);
+//   // const [isSent, setIsSent] = useState(false);
+//   const [status, setStatus] = useState('typing');
+
+//   async function handleSubmit(e) {
+//     e.preventDefault();
+//     // setIsSending(true);
+//     setStatus('sending');
+//     await sendMessage(text);
+//     // setIsSending(false);
+//     // setIsSent(true);
+//     setStatus('sent');
+//   }
+
+//   const isSending = status === 'sending';
+//   const isSent = status === 'sent';
+
+
+//   if(isSent) {
+//     return <h1>{text}:send Message!!!!</h1>
+//   }
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <p>How was your stay at the prancing pony???</p>
+//       <textarea
+//         disabled={isSending}
+//         value={text}
+//         onChange={e=>setText(e.target.value)}
+//       />
+//       <br/>
+//       <button
+//         disabled={isSending}
+//         type="submit"
+//       >
+//         send
+//       </button>
+//       {isSending && <p>sending........</p>}
+//     </form>
+//   )
+// }
+
+// function sendMessage(text) {
+//   return new Promise(resolve => {
+//     setTimeout(resolve, 2000);
+//   });
+// }
+
+
+// export default function Form(){
+//   const [firtstName, setFirstName] = useState('');
+//   const [lastName, setLastName] = useState('');
+//   const [fullName, setFullName] = useState('');
+
+//   function handleFirstNameChange(e)  {
+//     setFirstName(e.target.value);
+//     setFullName(e.target.value + ' ' + lastName);
+//   }
+
+//   function handleLastNameChange(e) {
+//     setLastName(e.target.value);
+//     setFullName(firtstName + ' ' + e.target.value);
+//   }
+
+//   return(
+//     <>
+//       <h2>let's check you in</h2>
+//       <label>
+//         first name:{ ' '}
+//         <input 
+//           value={firtstName}
+//           onChange={handleFirstNameChange}
+//         />
+//       </label>
+//       <label>
+//         last name: {' '}
+//         <input 
+//           value={lastName}
+//           onChange={handleLastNameChange}
+//         />
+//       </label>
+//       <p>
+//         your ticket will issued to: <b>{fullName}</b>
+//       </p>
+//     </>
+//   )
+// }
+
+
+function PlaceTree({place}) {
+  const childPlaces = place.childPlaces || [];
+
+  return(
+    <li>
+      {place.title}
+      {childPlaces.length > 0 && (
+        <ol>
+          {childPlaces.map(place => (
+            <PlaceTree key={place.id} place={place} />
+          ))}
+        </ol>
+      )}
+    </li>
+  );
 }
 
-function submitForm(answer) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      let shouldError = answer.toLowerCase() !== 'lima'
-      if(shouldError) {
-        reject(new Error('Good guess but a wrong answer'));
-      } else {
-        resolve();
-      }
-    }, 1500);
-  });
+export default function TravelPlan() {
+  const [plan, setPlan] = useState(initialTravelPlan);
+  const planets = plan.childPlaces;
+  return (
+    <>
+      <h2>place to visit</h2>
+      <ol>
+        {planets.map(place => (
+          <PlaceTree key={place.id} place={place} />
+        ))}
+      </ol>
+    </>
+  )
 }
