@@ -370,33 +370,169 @@ function Item({name, isPacked}) {
 //   );
 // }
 
-export default function RequestTracker() {
-  const [pending, setPending] = useState(0);
-  const [completed, setCompleted] = useState(0);
+// export default function RequestTracker() {
+//   const [pending, setPending] = useState(0);
+//   const [completed, setCompleted] = useState(0);
 
-  async function handleClick(){
-    setPending(pending + 1);
-    await delay(3000);
-    setPending(pending - 1);
-    setCompleted(completed + 1);
+//   async function handleClick(){
+//     setPending(pending + 1);
+//     await delay(3000);
+//     setPending(pending - 1);
+//     setCompleted(completed + 1);
 
+//   }
+
+//   return (
+//     <>
+//       <h3>
+//         pending: {pending}
+//       </h3>
+//       <h3>
+//         completed: {completed}
+//       </h3>
+//       <button onClick={handleClick}>buy</button>
+//     </>
+//   );
+// }
+
+// function delay(ms) {
+//   return new Promise(resolve => {
+//     setTimeout(resolve, ms);
+//   });
+// }
+
+
+// export default function MovingDot() {
+//   const [position, setPosition] = useState({x:0, y: 0});
+
+//   return(
+//   <div
+//     onPointerMove={e => {
+//       setPosition({
+//         x: e.clientX,
+//         y: e.clientY,
+//       });
+      
+//   }}
+//   style={{
+//     position:'relative',
+//     width:'100vw',
+//     height:'10vh',}}>
+//   <div style={{
+//     position:'absolute',
+//     backgroundColor:'red',
+//     borderRadius: '50%',
+//     transform: `translate(${position.x}px, ${position.y}px)`,
+//     left: -10,
+//     top:-10,
+//     width:20,
+//     height:20,
+//   }}/>
+//   </div>);
+// }
+
+
+export default function Form() {
+  const [person, setPerson] = useState({
+    firstName: 'panda',
+    lastName: 'Hepworth',
+    email: 'bhepworth@sculpture.com',
+    artwork:{
+      title:'blue nana',
+      city:'hamburg',
+      image:'https://i.imgur.com/'
+    },
+    score: 10,
+  });
+
+  function handlePlusClick(){
+    person.score ++;
+  }
+  function handleFirstNameChange(e) {
+    setPerson({
+      ...person,
+      firstName: e.target.firstName
+    });
+    // person.firstName = e.target.value;
   }
 
-  return (
-    <>
-      <h3>
-        pending: {pending}
-      </h3>
-      <h3>
-        completed: {completed}
-      </h3>
-      <button onClick={handleClick}>buy</button>
-    </>
-  );
-}
+  function handleLastNameChange(e) {
+    setPerson({
+      ...person,
+      lastName: e.target.lastName
+    });
+    // person.lastName = e.target.value;
+  }
 
-function delay(ms) {
-  return new Promise(resolve => {
-    setTimeout(resolve, ms);
-  });
+  function handleEmailChange(e) {
+    setPerson({
+      ...person,
+      email:e.target.email
+    })
+    // person.email = e.target.value;
+  }
+
+  function handleTitleChange(e) {
+    setPerson({
+      ...person,
+      artwork: {
+        ...person.artwork,
+        title: e.target.value
+      }
+    });
+  }
+
+  function handleCityChange(e) {
+    setPerson({
+      ...person,
+      artwork :{
+        ...person.artwork,
+        city: e.target.value
+      }
+    });
+  }
+
+  function handleImageChange(e) {
+    setPerson({
+      ...person,
+      artwork:{
+        ...person.artwork,
+        image: e.target.value
+      }
+    });
+  }
+
+  return(
+    <>
+      <label>
+        score: <b>{person.score}</b>
+        {' '}
+        <button onClick={handlePlusClick}> +1</button>
+      </label>
+      <label>
+        First name:
+        <input value={person.firstName} onChange={handleFirstNameChange}/>
+      </label>
+      <label>
+        Last name:
+        <input value={person.lastName} onChange={handleLastNameChange}/>
+      </label>
+      <label>
+        email:
+        <input value={person.email} onChange={handleEmailChange}/>
+      </label>
+      <label>
+        Title:
+        <input value={person.artwork.title} onChange={handleTitleChange}/>
+      </label>
+      <label>
+        city:
+        <input  value={person.artwork.city} onChange={handleCityChange}/>
+      </label>
+      <label>
+        image:
+        <input value={person.artwork.image} onChange={handleImageChange}/>
+      </label>
+    </>
+  )
 }
