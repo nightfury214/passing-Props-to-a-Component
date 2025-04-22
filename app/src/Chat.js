@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Chat ({ contact }) {
+export default function Chat ({ contact , message, dispatch}) {
     const [text, setText] = useState('');
 
     return(
