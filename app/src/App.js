@@ -30,6 +30,7 @@ import { people } from "./data";
 import FancyText from "./FancyText";
 import InspiratinGenerator from "./InspirationGenerator";
 import Copyright from "./Copyright";
+import { useState } from "react";
 
 function Card({children}) {
   return (
@@ -240,13 +241,162 @@ function Item({name, isPacked}) {
 
 
 
-export default function App() {
-  return(
+// export default function App() {
+//   return(
+//     <>
+//       <FancyText title text="Get Inspored App"/>
+//       <InspiratinGenerator>
+//         <Copyright  year={2025}/>
+//       </InspiratinGenerator>
+//     </>
+//   );
+// }
+
+// export default function Clock({time}) {
+//   return(
+//     <>
+//       <h1>{time}</h1>
+//       <input />
+//     </>
+//   )
+// }
+
+
+// export default function Form() {
+//   const [insSent, setIsSent] = useState(false);
+//   const [message, setMessage] = useState('Hi');
+
+//   if(insSent) {
+//     return <h1>Your message is on its way!</h1>
+//   }
+
+//   return(
+//     <form onSubmit={(e) =>{
+//       e.preventDefault();
+//       setIsSent(true);
+//       sendMessage(message);
+//     }}>
+//       <textarea
+//       placeholder="Message"
+//       value={message}
+//       onChange={e => setMessage(e.target.value)}
+//       />
+//       <button type="submit">send</button>
+//     </form>
+//   );
+// }
+
+// function sendMessage(message) {
+
+// }
+
+// export default function Counter() {
+//   const [number, setNumber] = useState(0);
+
+//   return (
+//     <>
+//       <h1>
+//         {number}
+//       </h1>
+//       <button
+//           onClick={() => {
+//             setNumber(number + 5);
+//             setTimeout(() => {
+//               alert(number);
+//             }, 3000);
+//           }}
+//         >
+//           +5
+//         </button>
+//     </>
+//   )
+// }
+
+
+// export default function TrafficLight() {
+//   const [walk, setWalk] = useState(true);
+
+//   function handleClick() {
+//     setWalk(!walk);
+//   }
+
+//   return (
+//     <>
+//       <button onClick={handleClick}>
+//         change to {walk ? 'stop' : 'walk'}
+//       </button>
+//       <h1 style={{color:walk ? 'derkgreen' : 'darked'}}>
+//         {walk ? 'walk' : 'stop'}
+//       </h1>
+//     </>
+//   );
+// }
+
+
+// export default function Gallery() {
+//   const [index, setIndex] = useState(0);
+//   const [showMore, setShowMore] = useState(false);
+
+//   function handleNextClick() {
+//     setIndex(index + 1);
+//   }
+
+//   function handleMoreClick() {
+//     setShowMore(!showMore);
+//   }
+
+//   let sculpture = people[index];
+
+//   return (
+//     <>
+//       <button onClick={handleNextClick}>
+//         next
+//       </button>
+//       <h2>
+//         <i>{sculpture.name}</i>by{sculpture.profession}
+//       </h2>
+//       <h3>
+//         <button>({index + 1} of {people.length})</button>
+//       </h3>
+//       <button onClick={handleMoreClick}>
+//         {showMore ? 'Hide' : 'show'} details
+//       </button>
+//       {showMore && <p>{sculpture.accomplishment}</p>}
+//       <img 
+//         src={sculpture.url}
+//         alt={sculpture.alt}
+//       />
+//     </>
+//   );
+// }
+
+export default function RequestTracker() {
+  const [pending, setPending] = useState(0);
+  const [completed, setCompleted] = useState(0);
+
+  async function handleClick(){
+    setPending(pending + 1);
+    await delay(3000);
+    setPending(pending - 1);
+    setCompleted(completed + 1);
+
+  }
+
+  return (
     <>
-      <FancyText title text="Get Inspored App"/>
-      <InspiratinGenerator>
-        <Copyright  year={2025}/>
-      </InspiratinGenerator>
+      <h3>
+        pending: {pending}
+      </h3>
+      <h3>
+        completed: {completed}
+      </h3>
+      <button onClick={handleClick}>buy</button>
     </>
   );
+}
+
+function delay(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
 }
