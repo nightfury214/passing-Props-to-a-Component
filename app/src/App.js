@@ -644,71 +644,129 @@ function Item({name, isPacked}) {
 // }
 
 
-let nextId = 3;
-const initialList = [
-  { id: 0, title: 'Big Bellies', seen: false },
-  { id: 1, title: 'Lunar Landscape', seen: false },
-  { id: 2, title: 'Terracotta Army', seen: true },
-];
+// let nextId = 3;
+// const initialList = [
+//   { id: 0, title: 'Big Bellies', seen: false },
+//   { id: 1, title: 'Lunar Landscape', seen: false },
+//   { id: 2, title: 'Terracotta Army', seen: true },
+// ];
 
 
-export default function BucketList() {
-  const [myList, setMyList] = useState(initialList);
-  const [yourList, setYourList] = useState(initialList);
+// export default function BucketList() {
+//   const [myList, setMyList] = useState(initialList);
+//   const [yourList, setYourList] = useState(initialList);
 
-  function handleToggleleMyList(artworkId, nextSeen) {
-    setMyList(myList.map(artwork => {
-      if(artwork.id === artworkId) {
-        return{...artwork, seen: nextSeen}
-      } else return artwork;
-    }));
+//   function handleToggleleMyList(artworkId, nextSeen) {
+//     setMyList(myList.map(artwork => {
+//       if(artwork.id === artworkId) {
+//         return{...artwork, seen: nextSeen}
+//       } else return artwork;
+//     }));
+//   }
+
+//   function handleToggleYourList(artworkId, nextSeen) {
+//     setYourList(yourList.map(artwork => {
+//       if(artwork.id === artworkId) {
+//         return{...artwork, seen:nextSeen};
+//       } else return artwork;
+//     }));
+//   }
+
+//   return (
+//     <>
+//       <h1>Art Bucket List</h1>
+//       <h2>My list of art to see:</h2>
+//       <ItemList 
+//         artworks={myList}
+//         onToggle={handleToggleleMyList}
+//       />
+//       <h2>Your list of art to see:</h2>
+//       <ItemList 
+//         artworks={yourList}
+//         onToggle={handleToggleYourList}
+//       />
+//     </>
+//   );
+// }
+
+// function ItemList({artworks, onToggle}) {
+//   return(
+//     <ul>
+//       {artworks.map(artwork => (
+//         <li key={artwork.id}>
+//           <label>
+//             <input 
+//               type="checkbox"
+//               checked={artwork.seen}
+//               onChange={e => {
+//                 onToggle(
+//                   artwork.id,
+//                 e.target.checked
+//                 );
+//               }}
+//             />
+//             {artwork.title}
+//           </label>
+//         </li>
+//       ))}
+//     </ul>
+//   );
+// }
+
+export default function Form() {
+  const [answer, setAnswer] = useState('');
+  const [error, setError] = useState(null);
+  const [status, setStatus] = useState('typing');
+
+  if(status === 'success') {
+    return <h1>That's right</h1>
   }
 
-  function handleToggleYourList(artworkId, nextSeen) {
-    setYourList(yourList.map(artwork => {
-      if(artwork.id === artworkId) {
-        return{...artwork, seen:nextSeen};
-      } else return artwork;
-    }));
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus('submitting');
+    try {
+      await submitForm(answer);
+      setStatus('success');
+    } catch(err) {
+      setStatus('typing');
+      setError(err);
+    }
+  }
+
+  function handleTextareaChange(e) {
+    setAnswer(e.target.value);
   }
 
   return (
     <>
-      <h1>Art Bucket List</h1>
-      <h2>My list of art to see:</h2>
-      <ItemList 
-        artworks={myList}
-        onToggle={handleToggleleMyList}
+    <h2>city quiz</h2>
+    <p>
+      In which city is there a billboard that turns ari
+    </p>
+    <form onSubmit={handleSubmit}>
+      <textarea 
+        value={answer}
+        onChange={handleTextareaChange}
+        disabled={status === 'submitting'}
       />
-      <h2>Your list of art to see:</h2>
-      <ItemList 
-        artworks={yourList}
-        onToggle={handleToggleYourList}
-      />
+    </form>
+    <br/>
+    <button disabled={answer.length === 0|| status === 'submitting'}>Submit</button>
+    {error !== null && <p className="Error">{error.message}</p>}
     </>
-  );
+  )
 }
 
-function ItemList({artworks, onToggle}) {
-  return(
-    <ul>
-      {artworks.map(artwork => (
-        <li key={artwork.id}>
-          <label>
-            <input 
-              type="checkbox"
-              checked={artwork.seen}
-              onChange={e => {
-                onToggle(
-                  artwork.id,
-                e.target.checked
-                );
-              }}
-            />
-            {artwork.title}
-          </label>
-        </li>
-      ))}
-    </ul>
-  );
+function submitForm(answer) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      let shouldError = answer.toLowerCase() !== 'lima'
+      if(shouldError) {
+        reject(new Error('Good guess but a wrong answer'));
+      } else {
+        resolve();
+      }
+    }, 1500);
+  });
 }
