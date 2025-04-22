@@ -864,34 +864,118 @@ function Item({name, isPacked}) {
 // }
 
 
-function PlaceTree({place}) {
-  const childPlaces = place.childPlaces || [];
+// function PlaceTree({place}) {
+//   const childPlaces = place.childPlaces || [];
 
+//   return(
+//     <li>
+//       {place.title}
+//       {childPlaces.length > 0 && (
+//         <ol>
+//           {childPlaces.map(place => (
+//             <PlaceTree key={place.id} place={place} />
+//           ))}
+//         </ol>
+//       )}
+//     </li>
+//   );
+// }
+
+// export default function TravelPlan() {
+//   const [plan, setPlan] = useState(initialTravelPlan);
+//   const planets = plan.childPlaces;
+//   return (
+//     <>
+//       <h2>place to visit</h2>
+//       <ol>
+//         {planets.map(place => (
+//           <PlaceTree key={place.id} place={place} />
+//         ))}
+//       </ol>
+//     </>
+//   )
+// }
+
+
+// function Panel({title, children}) {
+//   const [isActive, setIsActive] = useState(false);
+//   return (
+//     <section className="panel">
+//       <h3>{title}</h3>
+//       {isActive ? (
+//         <p>{children}</p>
+//       ):(
+//         <button onClick={() => setIsActive(true)}>
+//           show
+//         </button>
+//       )}
+//     </section>
+//   );
+// }
+
+// export default function Accordion() {
+//   return(
+//     <>
+//       <h2>Almaty</h2>
+//       <Panel title="About">
+//         with a population of about 2 million, Almaty is 
+//       </Panel>
+//       <Panel title="etymology">
+//         the name comes from
+//       </Panel>
+//     </>
+//   );
+// }
+
+// export default function Accordion(){
+//   return(
+//     <>
+//       <h2>
+//         almaty
+//       </h2>
+//       <Panel title="about" isActive={true}>
+//         with a population of about 2million
+//       </Panel>
+//       <Panel title="Etymology" isActive={true}>
+//         the name comes from
+//       </Panel>
+//     </>
+//   );
+// }
+
+// function Panel({title, children, isActive}) {
+//   return(
+//     <section className="panel">
+//       <h3>{title}</h3>
+//       {isActive ? (
+//         <p>{children}</p>
+//       ):(
+//         <button onClick={() => setIsActive(true)}></button>
+//       )}
+//     </section>
+//   )
+// }
+
+export default function SyncedInputs() {
   return(
-    <li>
-      {place.title}
-      {childPlaces.length > 0 && (
-        <ol>
-          {childPlaces.map(place => (
-            <PlaceTree key={place.id} place={place} />
-          ))}
-        </ol>
-      )}
-    </li>
+    <>
+      <Input label = "first input"/>
+      <Input label = "second input"/>
+    </>
   );
 }
 
-export default function TravelPlan() {
-  const [plan, setPlan] = useState(initialTravelPlan);
-  const planets = plan.childPlaces;
+function Input({label}) {
+  const [text, setText] = useState('');
+
+  function handleChange(e) {
+    setText(e.target.value);
+  }
+
   return (
-    <>
-      <h2>place to visit</h2>
-      <ol>
-        {planets.map(place => (
-          <PlaceTree key={place.id} place={place} />
-        ))}
-      </ol>
-    </>
+    <label>
+      {label}{' '}
+      <input value={text} onChange={handleChange}/>
+    </label>
   )
 }
