@@ -30,7 +30,7 @@ import { people } from "./data";
 import FancyText from "./FancyText";
 import InspiratinGenerator from "./InspirationGenerator";
 import Copyright from "./Copyright";
-import { useState , useContext,useRef} from "react";
+import { useState , useContext,useRef , useEffect} from "react";
 import { initialTravelPlan } from "./places";
 import Chat from "./Chat";
 import ContactList from "./ContactList";
@@ -41,6 +41,7 @@ import Section from "./Section";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList";
 import { TaskContext, TasksDispatchContext } from "./TasksContext";
+import { initialTodos, createTodo } from './todos.js';
 
 function Card({children}) {
   return (
@@ -1374,19 +1375,167 @@ function Item({name, isPacked}) {
 // }
 
 
-export default function Form() {
-  const inputRef = useRef(null);
+// export default function Form() {
+//   const inputRef = useRef(null);
 
-  function handleClick() {
-    inputRef.current.focus();
-  }
+//   function handleClick() {
+//     inputRef.current.focus();
+//   }
+
+//   return (
+//     <>
+//       <input ref={inputRef} />
+//       <button onClick={handleClick}>
+//         Focus the input
+//       </button>
+//     </>
+//   );
+// }
+
+// function VideoPlayer({src, insPlaying}) {
+//   const ref = useRef(null);
+
+//   useEffect(() => {
+//     if(insPlaying) {
+//       console.log('calling play()');
+//       ref.current.play();
+//     }
+//     else{
+//       console.log('calling pause()');
+//       ref.current.pause();
+//     }
+//   }, [insPlaying]);
+
+//   return <video ref={ref} src={src} loop playsInline />;
+// }
+
+// export default function App() {
+//   const [isPlaying, setIsPlaying] = useState(false);
+//   const [text, setText] = useState('');
+
+//   return(
+//     <>
+//       <input value={text} onChange={e=> setText(e.target.value)}/>
+//       <button onClick={() => setIsPlaying(!isPlaying)}>
+//         {isPlaying ? 'pause':'Play'}
+//       </button>
+//     </>
+//   );
+// }
+
+
+
+// export default function TodoList() {
+//   const [todos, setTodos] = useState(initialTodos);
+//   const [showActive, setShowActive] = useState(false);
+//   const [activeTodos, setActiveTodos] = useState([]);
+//   const [visibleTodos, setVisibleTodos] = useState([]);
+//   const [footer, setFooter] = useState(null);
+
+//   useEffect(() => {
+//     setActiveTodos(todos.filter(todo => !todo.completed));
+//   }, [todos]);
+
+//   useEffect(() => {
+//     setVisibleTodos(showActive ? activeTodos : todos);
+//   }, [showActive, todos, activeTodos]);
+
+//   useEffect(() => {
+//     setFooter(
+//       <footer>
+//         {activeTodos.length} todos left
+//       </footer>
+//     );
+//   }, [activeTodos]);
+
+//   return (
+//     <>
+//       <label>
+//         <input
+//           type="checkbox"
+//           checked={showActive}
+//           onChange={e => setShowActive(e.target.checked)}
+//         />
+//         Show only active todos
+//       </label>
+//       <NewTodo onAdd={newTodo => setTodos([...todos, newTodo])} />
+//       <ul>
+//         {visibleTodos.map(todo => (
+//           <li key={todo.id}>
+//             {todo.completed ? <s>{todo.text}</s> : todo.text}
+//           </li>
+//         ))}
+//       </ul>
+//       {footer}
+//     </>
+//   );
+// }
+
+// function NewTodo({ onAdd }) {
+//   const [text, setText] = useState('');
+
+//   function handleAddClick() {
+//     setText('');
+//     onAdd(createTodo(text));
+//   }
+
+//   return (
+//     <>
+//       <input value={text} onChange={e => setText(e.target.value)} />
+//       <button onClick={handleAddClick}>
+//         Add
+//       </button>
+//     </>
+//   );
+// }
+
+
+function ChatRoom({ roomId }) {
+  const [serverUrl, setServerUrl] = useState('https://localhost:1234');
+
+  useEffect(() => {
+    const connection = Chat(serverUrl, roomId);
+    connection.connect();
+    return () => connection.disconnect();
+  }, [serverUrl, roomId]);
 
   return (
     <>
-      <input ref={inputRef} />
-      <button onClick={handleClick}>
-        Focus the input
-      </button>
+      <label>
+        Server URL:{' '}
+        <input
+          value={serverUrl}
+          onChange={e => setServerUrl(e.target.value)}
+        />
+      </label>
+      <h1>Welcome to the {roomId} room!</h1>
+    </>
+  );
+}
+
+export default function App() {
+  const [roomId, setRoomId] = useState('general');
+  const [show, setShow] = useState(false);
+
+  return (
+    <>
+    <button onClick={() => setShow(!show)}>
+      {show ? 'close chat' : 'open chat'}
+    </button>
+      <label>
+        Choose the chat room:{' '}
+        <select
+          value={roomId}
+          onChange={e => setRoomId(e.target.value)}
+        >
+          <option value="general">general</option>
+          <option value="travel">travel</option>
+          <option value="music">music</option>
+        </select>
+      </label>
+      <hr />
+      {show && <hr />}
+      {show && <ChatRoom roomId={roomId} />}
     </>
   );
 }
