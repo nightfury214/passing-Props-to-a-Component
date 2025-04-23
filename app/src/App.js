@@ -30,13 +30,17 @@ import { people } from "./data";
 import FancyText from "./FancyText";
 import InspiratinGenerator from "./InspirationGenerator";
 import Copyright from "./Copyright";
-import { useState } from "react";
+import { useState , useContext} from "react";
 import { initialTravelPlan } from "./places";
 import Chat from "./Chat";
 import ContactList from "./ContactList";
 import { useReducer } from "react";
 import { initialState, messengerReducer } from "./messengerReducer";
-
+import Heading from "./Heading";
+import Section from "./Section";
+import AddTask from "./AddTask";
+import TaskList from "./TaskList";
+import { TaskContext, TasksDispatchContext } from "./TasksContext";
 
 function Card({children}) {
   return (
@@ -1142,28 +1146,178 @@ function Item({name, isPacked}) {
 // ];
 
 
-export default function Messenger() {
-  const [state, dispatch] = useReducer(messengerReducer, initialState);
-  const message = state.message;
-  const contact = contacts.find((c) => c.id === state.selectedId);
+// export default function Messenger() {
+//   const [state, dispatch] = useReducer(messengerReducer, initialState);
+//   const message = state.message;
+//   const contact = contacts.find((c) => c.id === state.selectedId);
 
-  return (
-    <div>
-      <ContactList 
-        contacts={contacts}
-        selectedId={state.selectedId}
-        dispatch={dispatch}
-      />
-      <Chat 
-        key={contact.id}
-        message={message}
-        contact={contact}
-        dispatch={dispatch}
-      />
-    </div>
-  )
-}
+//   return (
+//     <div>
+//       <ContactList 
+//         contacts={contacts}
+//         selectedId={state.selectedId}
+//         dispatch={dispatch}
+//       />
+//       <Chat 
+//         key={contact.id}
+//         message={message}
+//         contact={contact}
+//         dispatch={dispatch}
+//       />
+//     </div>
+//   )
+// }
 
-const contacts =[{id: 0, name: 'Taylor', email: 'taylor@mail.com'},
-  {id: 1, name: 'Alice', email: 'alice@mail.com'},
-  {id: 2, name: 'Bob', email: 'bob@mail.com'},];
+// const contacts =[{id: 0, name: 'Taylor', email: 'taylor@mail.com'},
+//   {id: 1, name: 'Alice', email: 'alice@mail.com'},
+//   {id: 2, name: 'Bob', email: 'bob@mail.com'},];
+
+// export default function Page() {
+//   return(
+//     <Section>
+//       <Heading level={1}>Title</Heading>
+//       <Section>
+//         <Heading level={2}>Heading</Heading>
+//         <Heading level={2}>Heading</Heading>
+//         <Heading level={2}>Heading</Heading>
+//         <Section>
+//           <Heading level={3}>Sub-heading</Heading>
+//           <Heading level={3}>Sub-heading</Heading>
+//           <Heading level={3}>Sub-heading</Heading>
+//           <Section>
+//             <Heading level={4}>Sub-sub-heading</Heading>
+//             <Heading level={4}>Sub-sub-heading</Heading>
+//             <Heading level={4}>Sub-sub-heading</Heading>
+//           </Section>
+//         </Section>
+//       </Section>
+//     </Section>
+//   )
+// }
+
+
+// export default function App() {
+//   const [isLarge, setIsLarge] = useState(false);
+//   const imageSize = isLarge ? 150 : 100;
+//   return (
+//     <>
+//       <label>
+//         <input 
+//           type = "checkbox"
+//           checked = {isLarge}
+//           onChange={e => {
+//             setIsLarge(e.target.checked);
+//           }}
+//         />
+//         Use large images
+//       </label>
+//       <hr />
+//       <List imageSize = {imageSize}/>
+//     </>
+//   )
+// }
+
+// function List({imageSize}) {
+//   const listItems = people.map(p =>
+//     <li key={p.id}>
+//       <Place place={p}
+//       imageSize={imageSize}
+//       />
+//     </li>
+//   );
+//   return <ul>{listItems}</ul>;
+// }
+
+// function Place({place, imageSize}) {
+//   return(
+//     <>
+//       <PlaceImage 
+//         place={place}
+//       />
+//     </>
+//   )
+// }
+
+
+// export default function TaskApp() {
+//   const [tasks, dispatch] = useReducer(
+//     tasksReducer,
+//     initialTasks
+//   );
+
+//   function handleAddTask(text) {
+//     dispatch({
+//       type: 'added',
+//       id: nextId++,
+//       text: text,
+//     });
+//   }
+
+//   function handleChangeTask(task) {
+//     dispatch({
+//       type: 'changed',
+//       task: task
+//     });
+//   }
+
+//   function handleDeleteTask(taskId) {
+//     dispatch({
+//       type: 'deleted',
+//       id: taskId
+//     });
+//   }
+
+//   return (
+//     <>
+//       <TaskContext.Provider value={tasks}>
+//         <TasksDispatchContext.Provider value={dispatch}>
+//         <h1>Day off in Kyoto</h1>
+//           <AddTask
+//             onAddTask={handleAddTask}
+//           />
+//           <TaskList
+//             tasks={tasks}
+//             onChangeTask={handleChangeTask}
+//             onDeleteTask={handleDeleteTask}
+//           />
+//         </TasksDispatchContext.Provider>
+//         </TaskContext.Provider>
+      
+//     </>
+//   );
+// }
+
+// function tasksReducer(tasks, action) {
+//   switch (action.type) {
+//     case 'added': {
+//       return [...tasks, {
+//         id: action.id,
+//         text: action.text,
+//         done: false
+//       }];
+//     }
+//     case 'changed': {
+//       return tasks.map(t => {
+//         if (t.id === action.task.id) {
+//           return action.task;
+//         } else {
+//           return t;
+//         }
+//       });
+//     }
+//     case 'deleted': {
+//       return tasks.filter(t => t.id !== action.id);
+//     }
+//     default: {
+//       throw Error('Unknown action: ' + action.type);
+//     }
+//   }
+// }
+
+// let nextId = 3;
+// const initialTasks = [
+//   { id: 0, text: 'Philosopher’s Path', done: true },
+//   { id: 1, text: 'Visit the temple', done: false },
+//   { id: 2, text: 'Drink matcha', done: false }
+// ];
+
