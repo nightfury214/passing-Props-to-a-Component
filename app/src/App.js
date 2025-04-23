@@ -23,7 +23,7 @@
 // }
 
 // export default App;
-
+import { showNotification } from "./notifications.js";
 import Avatar from "./Avatar";
 import { getImageUrl } from "./utils";
 import { people } from "./data";
@@ -32,7 +32,7 @@ import InspiratinGenerator from "./InspirationGenerator";
 import Copyright from "./Copyright";
 import { useState , useContext,useRef , useEffect} from "react";
 import { initialTravelPlan } from "./places";
-import Chat from "./Chat";
+import {Chat, sendMessage} from "./Chat";
 import ContactList from "./ContactList";
 import { useReducer } from "react";
 import { initialState, messengerReducer } from "./messengerReducer";
@@ -1492,12 +1492,18 @@ function Item({name, isPacked}) {
 
 function ChatRoom({ roomId }) {
   const [serverUrl, setServerUrl] = useState('https://localhost:1234');
+  const [message, setMessage] = useState('');
+
 
   useEffect(() => {
     const connection = Chat(serverUrl, roomId);
     connection.connect();
     return () => connection.disconnect();
   }, [serverUrl, roomId]);
+
+  function handelSendClick() {
+    sendMessage(message);
+  }
 
   return (
     <>
@@ -1509,6 +1515,9 @@ function ChatRoom({ roomId }) {
         />
       </label>
       <h1>Welcome to the {roomId} room!</h1>
+      <input value={message} onChange={e => setMessage(e.target.value)} />
+      <button onClick={handelSendClick}>send</button>
+      
     </>
   );
 }
@@ -1516,6 +1525,7 @@ function ChatRoom({ roomId }) {
 export default function App() {
   const [roomId, setRoomId] = useState('general');
   const [show, setShow] = useState(false);
+  const [isDark, setIsDark] = useState(false);
 
   return (
     <>
@@ -1533,9 +1543,15 @@ export default function App() {
           <option value="music">music</option>
         </select>
       </label>
+      <input 
+        type="checkbox"
+        checked={isDark}
+        onChange={e => setIsDark(e.target.checked)}
+      />
       <hr />
       {show && <hr />}
-      {show && <ChatRoom roomId={roomId} />}
+      {show && <ChatRoom roomId={roomId} theme={isDark ? 'dark' : 'light'}/>}
     </>
   );
 }
+

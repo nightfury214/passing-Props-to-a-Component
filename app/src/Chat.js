@@ -16,7 +16,12 @@
 //     );
 // }
 
-export default function Chat(serverUrl, roomId) {
+export function sendMessage(message) {
+    console.log('🔵 You sent: ' + message);
+  }
+
+  
+export function Chat(serverUrl, roomId) {
     // A real implementation would actually connect to the server
     return {
       connect() {
